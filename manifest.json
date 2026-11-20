@@ -1,0 +1,16 @@
+{
+  "name": "Klaim BBM Revo Fit",
+  "short_name": "Klaim BBM",
+  "description": "Hitung klaim BBM motor Revo Fit",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#e2f5f8",
+  "theme_color": "#0a7f9c",
+  "lang": "id",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

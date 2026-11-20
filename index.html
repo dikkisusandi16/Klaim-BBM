@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Klaim BBM Revo Fit</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a7f9c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Klaim BBM">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eaf4f6;--g1:#e2f5f8;--g2:#f1ecfb;--card:#fff;--ink:#12303a;--mut:#5a7480;--line:#d4e4ea;--acc:#0a7f9c;--accink:#fff;--warn:#c62828;--hl:#e3f4f8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a20;--g1:#0d1b22;--g2:#171a30;--card:#15262e;--ink:#e6f1f4;--mut:#93aab4;--line:#26414c;--acc:#4cc9e4;--accink:#062029;--warn:#ff8a80;--hl:#183743}}
+:root[data-theme="dark"]{--bg:#0e1a20;--g1:#0d1b22;--g2:#171a30;--card:#15262e;--ink:#e6f1f4;--mut:#93aab4;--line:#26414c;--acc:#4cc9e4;--accink:#062029;--warn:#ff8a80;--hl:#183743}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);background-image:linear-gradient(160deg,var(--g1),var(--g2));background-attachment:fixed;color:var(--ink);font:16px/1.45 Barlow,system-ui,sans-serif}
+main{max-width:480px;margin:0 auto;padding:16px}
+h1{font:700 26px 'Barlow Semi Condensed',sans-serif;margin:8px 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 8px 22px rgba(10,60,80,.10)}
+label{display:block;font-size:14px;color:var(--mut);margin:10px 0 4px}
+input,select{width:100%;font:500 18px Barlow,sans-serif;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--acc);outline-offset:1px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row input[type=hidden]+div{grid-column:1/-1}
+.calc{background:var(--hl);border-radius:12px;padding:14px;margin-top:14px}
+.big{font:700 52px/1 'Barlow Semi Condensed',sans-serif;color:var(--acc)}
+.big small{font-size:20px;color:var(--ink);margin-left:4px}
+.rumus{color:var(--mut);font-size:15px;margin-top:6px;overflow-wrap:anywhere}
+.err{color:var(--warn);font-weight:600;margin-top:6px}
+button{font:600 17px Barlow,sans-serif;border:0;border-radius:10px;padding:13px;cursor:pointer;background:var(--acc);color:var(--accink);width:100%;margin-top:12px}
+button.sec{background:transparent;color:var(--ink);border:1px solid var(--line);margin-top:8px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.sum b{display:block;font:700 24px 'Barlow Semi Condensed',sans-serif}
+.sum span{font-size:13px;color:var(--mut)}
+.item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item .l{font-weight:600}.item .s{font-size:14px;color:var(--mut)}
+.item .x{background:none;border:0;color:var(--warn);width:auto;margin:0;padding:4px 8px;font-size:14px}
+.empty{color:var(--mut);padding:6px 0}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+:root{--glint:rgba(255,255,255,.65)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--glint:rgba(255,255,255,.13)}}
+:root[data-theme="dark"]{--glint:rgba(255,255,255,.13)}
+.card,#simpan{position:relative;overflow:hidden}
+.card::before,#simpan::before{content:"";position:absolute;top:-60%;left:-70%;width:35%;height:220%;background:linear-gradient(100deg,transparent,var(--glint),transparent);transform:rotate(14deg);animation:kilau 5s ease-in-out infinite;pointer-events:none}
+#simpan::before{animation-duration:3.2s}
+@keyframes kilau{0%{left:-70%}55%,100%{left:140%}}
+.big span{background:linear-gradient(100deg,var(--acc) 38%,#fff 50%,var(--acc) 62%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:silaw 3.5s linear infinite}
+@keyframes silaw{0%{background-position:120% 0}100%{background-position:-20% 0}}
+@media (prefers-reduced-motion:reduce){.card::before,#simpan::before,.big span{animation:none}.big span{background:none;-webkit-text-fill-color:var(--acc);color:var(--acc)}}
+@keyframes masuk{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes ngambang{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes geser{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes denyut{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--acc) 45%,transparent)}50%{box-shadow:0 0 0 10px transparent}}
+@keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes getar{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+body{background-size:220% 220%;animation:geser 16s ease-in-out infinite}
+main>*{animation:masuk .65s cubic-bezier(.2,.8,.2,1) both}
+main>*:nth-child(2){animation-delay:.1s}
+main>*:nth-child(3){animation-delay:.2s}
+h1{animation:masuk .65s cubic-bezier(.2,.8,.2,1) both,ngambang 4s ease-in-out .9s infinite}
+.card .row>div{animation:masuk .55s cubic-bezier(.2,.8,.2,1) both}
+.card .row>div:nth-of-type(1){animation-delay:.25s}
+.card .row>div:nth-of-type(2){animation-delay:.35s}
+.card .row>div:nth-of-type(3){animation-delay:.45s}
+.calc{animation:masuk .6s cubic-bezier(.2,.8,.2,1) .55s both}
+button#simpan{animation:masuk .6s cubic-bezier(.2,.8,.2,1) .65s both}
+input,select{transition:box-shadow .25s,border-color .25s,transform .2s}
+input:focus,select:focus{border-color:var(--acc);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 25%,transparent);transform:scale(1.015)}
+button{transition:transform .15s,filter .2s}
+button:not(:disabled):hover{filter:brightness(1.1)}
+button:not(:disabled):active{transform:scale(.94)}
+button#simpan:not(:disabled){animation:denyut 1.8s ease-in-out infinite}
+.big{transform-origin:left center}
+.big.pop{animation:pop .5s ease}
+#err:not(:empty){animation:getar .4s}
+#rp:not(:empty),#hint:not(:empty){animation:masuk .4s both}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+#loading{position:fixed;inset:0;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--g1),var(--g2));transition:opacity .5s,visibility .5s}
+#loading.selesai{opacity:0;visibility:hidden}
+.jalan{position:relative;width:100%;height:90px;border-bottom:4px dashed var(--line);overflow:hidden}
+.kendaraan{position:absolute;bottom:2px;left:100%;white-space:nowrap;animation:lewat 2.2s cubic-bezier(.45,0,.55,1) forwards}
+.motor{display:inline-block;font-size:58px;animation:goyang .25s ease-in-out infinite alternate}
+.asap{display:inline-block;font-size:30px;animation:kepul .5s linear infinite}
+.muat{margin-top:18px;font:700 22px 'Barlow Semi Condensed',sans-serif;color:var(--acc);animation:kedip 1s ease-in-out infinite}
+@keyframes lewat{from{left:100%}to{left:-160px}}
+@keyframes goyang{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-3px) rotate(2deg)}}
+@keyframes kepul{from{opacity:.9;transform:translateX(0) scale(.7)}to{opacity:0;transform:translateX(20px) scale(1.3)}}
+@keyframes kedip{50%{opacity:.35}}
+body:not(.siap) main,body:not(.siap) main *,body:not(.siap) main *::before{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){#loading{display:none}}
+</style>
+</head>
+<body>
+<div id="loading" aria-hidden="true"><div class="jalan"><span class="kendaraan"><span class="motor">🏍️</span><span class="asap">💨</span></span></div><div class="muat">⛽ Memuat...</div></div>
+<main>
+<h1>⛽ Klaim BBM Revo Fit 🏍️</h1>
+<div style="color:var(--mut);font-size:14px;margin:-8px 0 14px">✨ Dibuat oleh DikSus</div>
+
+<section class="card" aria-label="Form klaim">
+  <div class="row">
+    <input id="tgl" type="hidden">
+    <div><label for="minyak">🛢️ Nama minyak</label><select id="minyak"></select></div>
+  </div>
+  <div class="row">
+    <div><label for="awal">📍 KM awal</label><input id="awal" type="number" inputmode="numeric" min="0"></div>
+    <div><label for="akhir">🏁 KM akhir</label><input id="akhir" type="number" inputmode="numeric" min="0"></div>
+    <div style="grid-column:1/-1"><label for="mau">💧 Mau isi berapa liter?</label><input id="mau" type="number" inputmode="decimal" min="0" step="any"><div id="hint" style="font-weight:600;color:var(--acc);margin-top:6px"></div></div>
+  </div>
+  <div class="row">
+    <input id="rasio" type="hidden" value="50">
+    <div><label for="harga">💰 Harga per liter</label><input id="harga" type="number" inputmode="numeric" min="0"></div>
+  </div>
+
+  <div class="calc" aria-live="polite">
+    <div class="big"><span id="liter">0</span><small>liter ⛽</small></div>
+    <div class="rumus" id="rp"></div>
+    <div class="err" id="err" role="alert"></div>
+  </div>
+  <button id="simpan" hidden disabled>💾 Simpan klaim</button>
+</section>
+
+<div hidden>
+<section class="card" aria-label="Rekap">
+  <div class="sum">
+    <div><b id="tKm">0</b><span>🛣️ Total km</span></div>
+    <div><b id="tL">0</b><span>💧 Total liter</span></div>
+    <div><b id="tRp">0</b><span>💰 Total Rp</span></div>
+  </div>
+</section>
+
+<section class="card" aria-label="Riwayat klaim">
+  <div id="list"></div>
+  <div class="tools">
+    <button class="sec" id="salin">📋 Salin rekap</button>
+    <button class="sec" id="reset">🗑️ Hapus semua</button>
+  </div>
+</section>
+</div>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const BBM={'Pertalite':10000,'Pertamax':16300,'Pertamax Turbo':20000};
+const KEY='klaim-bbm-v1';
+let data={items:[],rasio:50,harga:''};
+try{const r=localStorage.getItem(KEY);if(r){const p=JSON.parse(r);if(p&&Array.isArray(p.items))data=p}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}};
+const nf=n=>new Intl.NumberFormat('id-ID',{maximumFractionDigits:2}).format(n);
+const rp=n=>'Rp'+new Intl.NumberFormat('id-ID',{maximumFractionDigits:0}).format(n);
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const fmtTgl=s=>{const [y,m,d]=s.split('-');return d+'/'+m+'/'+y};
+const num=id=>{const v=parseFloat($(id).value);return isNaN(v)?null:v};
+
+let sfxOn=true;
+let AC=null,tm;
+const bukaAudio=()=>{try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume()}catch(e){}};
+['pointerdown','touchstart','keydown','click'].forEach(e=>document.addEventListener(e,bukaAudio,{passive:true,capture:true}));
+function tone(f,d,t,v,w){if(!sfxOn)return;try{bukaAudio();if(!AC)return;const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+(w||0),vol=Math.min(.9,(v||.08)*6);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(0.0001,s);g.gain.exponentialRampToValueAtTime(vol,s+.01);g.gain.exponentialRampToValueAtTime(0.0001,s+d);o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+d+.02)}catch(e){}}
+function brum(){if(!sfxOn)return;try{bukaAudio();if(!AC)return;const s=AC.currentTime,o=AC.createOscillator(),g=AC.createGain(),f=AC.createBiquadFilter();o.type='sawtooth';f.type='lowpass';f.frequency.value=700;o.frequency.setValueAtTime(60,s);o.frequency.exponentialRampToValueAtTime(190,s+1);o.frequency.exponentialRampToValueAtTime(90,s+2.2);g.gain.setValueAtTime(0.0001,s);g.gain.exponentialRampToValueAtTime(.6,s+.15);g.gain.exponentialRampToValueAtTime(0.0001,s+2.3);o.connect(f);f.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+2.4)}catch(e){}}
+const sfx={
+  tap:()=>tone(660,.07,'triangle'),
+  hasil:()=>{tone(880,.12,'sine');tone(1320,.18,'sine',.06,.09)},
+  simpan:()=>{tone(523,.12,'triangle');tone(659,.12,'triangle',.08,.1);tone(784,.28,'triangle',.08,.2)},
+  hapus:()=>tone(220,.18,'sawtooth',.05),
+  err:()=>{tone(180,.15,'square',.04);tone(150,.2,'square',.04,.14)},
+  salin:()=>{tone(988,.08,'sine');tone(1319,.12,'sine',.07,.08)}
+};
+$('tgl').value=today();
+$('rasio').value=50;
+Object.keys(BBM).forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;$('minyak').append(o)});
+if(data.minyak&&BBM[data.minyak])$('minyak').value=data.minyak;
+$('harga').value=BBM[$('minyak').value];
+$('minyak').addEventListener('change',()=>{$('harga').value=BBM[$('minyak').value];hitung()});
+
+
+let cur=null;
+function hitung(){
+  const a=num('awal'),b=num('akhir'),r=num('rasio'),h=num('harga');
+  clearTimeout(tm);cur=null;$('err').textContent='';$('rp').textContent='';
+  if(a===null||b===null){$('liter').textContent='0';$('simpan').disabled=true;return}
+  if(!r||r<=0){$('err').textContent='Km per liter harus lebih dari 0.';$('simpan').disabled=true;return}
+  if(b<=a){$('liter').textContent='0';$('err').textContent='KM akhir harus lebih besar dari KM awal.';tm=setTimeout(sfx.err,700);$('simpan').disabled=true;return}
+  const sel=b-a,l=Math.round(sel/r*100)/100;
+  naik($('liter'),l);
+  if(h){$('rp').textContent='💵 '+rp(l*h)}
+  cur={tgl:$('tgl').value||today(),minyak:$('minyak').value,awal:a,akhir:b,sel,rasio:r,liter:l,harga:h||0,total:h?Math.round(l*h):0};
+  $('simpan').disabled=false;tm=setTimeout(sfx.hasil,450);
+}
+['tgl','awal','akhir','rasio','harga'].forEach(i=>$(i).addEventListener('input',hitung));
+let angkaAnim,angkaNow=0;
+function naik(el,to){cancelAnimationFrame(angkaAnim);const from=angkaNow,t0=performance.now(),d=450;
+  const step=t=>{const p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);angkaNow=from+(to-from)*e;el.textContent=nf(Math.round(angkaNow*100)/100);if(p<1)angkaAnim=requestAnimationFrame(step)};
+  angkaAnim=requestAnimationFrame(step);
+  const b=el.parentNode;b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop')}
+function dariLiter(){const a=num('awal'),m=num('mau'),r=num('rasio');
+  if(m===null||a===null||m<=0){$('hint').textContent='';return}
+  const k=Math.round(a+m*r);$('akhir').value=k;$('hint').textContent='KM akhir harus '+nf(k);hitung()}
+$('mau').addEventListener('input',dariLiter);
+$('awal').addEventListener('input',()=>{if($('mau').value)dariLiter()});
+$('akhir').addEventListener('input',()=>{$('mau').value='';$('hint').textContent=''});
+
+function render(){
+  const L=$('list');L.innerHTML='';
+  if(!data.items.length){L.innerHTML='<div class="empty">Belum ada klaim. Isi form lalu tekan Simpan klaim.</div>'}
+  data.items.forEach((it,i)=>{
+    const d=document.createElement('div');d.className='item';
+    const left=document.createElement('div');
+    const t=document.createElement('div');t.className='l';t.textContent=`${fmtTgl(it.tgl)}${it.minyak?' · '+it.minyak:''}`;
+    const s=document.createElement('div');s.className='s';
+    s.textContent=`${nf(it.awal)} → ${nf(it.akhir)} (${nf(it.sel)} km) · ${nf(it.liter)} L${it.total?' · '+rp(it.total):''}`;
+    left.append(t,s);
+    const x=document.createElement('button');x.className='x';x.textContent='Hapus';x.setAttribute('aria-label','Hapus klaim '+fmtTgl(it.tgl));
+    x.onclick=()=>{sfx.hapus();data.items.splice(i,1);save();render()};
+    d.append(left,x);L.append(d);
+  });
+  const km=data.items.reduce((a,b)=>a+b.sel,0),lt=data.items.reduce((a,b)=>a+b.liter,0),tt=data.items.reduce((a,b)=>a+b.total,0);
+  $('tKm').textContent=nf(km);$('tL').textContent=nf(Math.round(lt*100)/100);$('tRp').textContent=nf(tt);
+}
+
+$('simpan').onclick=()=>{
+  if(!cur)return;
+  sfx.simpan();data.items.unshift(cur);data.rasio=cur.rasio;data.minyak=cur.minyak;
+  save();render();
+  $('awal').value=cur.akhir;$('akhir').value='';$('mau').value='';$('hint').textContent='';hitung();$('akhir').focus();
+};
+$('reset').onclick=()=>{if(data.items.length&&confirm('Hapus semua riwayat klaim?')){sfx.hapus();data.items=[];save();render()}};
+$('salin').onclick=async()=>{
+  if(!data.items.length)return;
+  const rows=[...data.items].reverse().map(it=>`${fmtTgl(it.tgl)}${it.minyak?' '+it.minyak:''} | KM ${it.awal}-${it.akhir} | ${nf(it.sel)} km | ${nf(it.liter)} L${it.total?' | '+rp(it.total):''}`);
+  const txt='REKAP KLAIM BBM\n'+rows.join('\n')+`\nTotal: ${$('tKm').textContent} km, ${$('tL').textContent} L${$('tRp').textContent!=='0'?', Rp'+$('tRp').textContent:''}`;
+  try{await navigator.clipboard.writeText(txt);sfx.salin();$('salin').textContent='✅ Tersalin'}catch(e){sfx.err();$('salin').textContent='⚠️ Gagal menyalin'}
+  setTimeout(()=>$('salin').textContent='📋 Salin rekap',1500);
+};
+render();hitung();
+bukaAudio();
+if(AC&&AC.state==='running')brum();
+else{const mulai=()=>{['pointerdown','touchstart','keydown','click'].forEach(e=>document.removeEventListener(e,mulai,true));setTimeout(brum,30)};['pointerdown','touchstart','keydown','click'].forEach(e=>document.addEventListener(e,mulai,true))}
+setTimeout(()=>{document.body.classList.add('siap');$('loading').classList.add('selesai')},2400);
+setTimeout(()=>{const e=$('loading');if(e)e.remove()},3100);
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});</script>
+</body>
+</html>
